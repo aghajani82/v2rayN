@@ -42,7 +42,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'AmazTool build failed' }
           dotnet publish v2rayN/v2rayN.Windows/v2rayN.Windows.csproj -c Release -r win-x64 --self-contained true -o $app
           if ($LASTEXITCODE -ne 0) { throw 'v2rayN build failed' }
-          foreach ($required in @('v2rayN.exe', 'ServiceLib.dll', 'bin/xray/xray.exe')) {
+          foreach ($required in @('v2rayN.exe', 'AmazTool.exe', 'bin/xray/xray.exe')) {
             if (!(Test-Path (Join-Path $app $required))) { throw "Package is missing $required" }
           }
           Copy-Item LICENSE, IRAN-LITE.md -Destination $app
