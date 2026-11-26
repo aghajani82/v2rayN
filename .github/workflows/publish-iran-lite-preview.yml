@@ -23,9 +23,9 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       GH_REPO: ${{ github.repository }}
-      SOURCE_SHA: '9953885fb73ecd6306d9b316931c7c98e42caa0c'
-      RUN_ID: '45859350533'
-      RELEASE_TAG: 'iran-lite-windows-preview.2'
+      SOURCE_SHA: '03918a8075cc41705de3acca8371e98ad9455fff'
+      RUN_ID: '45884874326'
+      RELEASE_TAG: 'iran-lite-windows-preview.3'
       ARTIFACT: 'v2rayN-Aghajani-Iran-Lite-win-x64'
       ASSET: 'v2rayN-Aghajani-Iran-Lite-win-x64.zip'
     steps:
@@ -47,6 +47,6 @@ jobs:
           cd package
           sha256sum --strict --check "$ASSET.sha256"
           gh release create "$RELEASE_TAG" "$ASSET" "$ASSET.sha256" \
-            --target "$SOURCE_SHA" --title 'Iran Lite Windows Preview 2' \
+            --target "$SOURCE_SHA" --title 'Iran Lite Windows Preview 3' \
             --prerelease --latest=false \
-            --notes 'Portable Windows x64 preview. Extract it in a fresh folder and launch v2rayN.exe. Iran Lite keeps ChatGPT on the proxy before direct routes. Built by Actions run 45859350533.'
+            --notes 'Portable Windows x64 preview. Extract it in a fresh folder and launch v2rayN.exe. Iran Lite keeps ChatGPT on the proxy before direct routes. Adds direct routing for bank-keshavarzi.com, karafarinbank.com, and qmehr724.com. Built by Actions run 45884874326.'
