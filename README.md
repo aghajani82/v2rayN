@@ -2,7 +2,7 @@
 
 ## دانلود Aghajani Edition – Iran Lite
 
-**[دانلود ZIP ویندوز ۶۴ بیتی](https://github.com/aghajani82/v2rayN/releases/download/iran-lite-windows-preview.2/v2rayN-Aghajani-Iran-Lite-win-x64.zip)** · [صفحهٔ انتشار](https://github.com/aghajani82/v2rayN/releases/tag/iran-lite-windows-preview.2) · [نسخهٔ اندروید](https://github.com/aghajani82/v2rayNG#readme)
+**[دانلود ZIP ویندوز ۶۴ بیتی](https://github.com/aghajani82/v2rayN/releases/download/iran-lite-windows-preview.3/v2rayN-Aghajani-Iran-Lite-win-x64.zip)** · [صفحهٔ انتشار](https://github.com/aghajani82/v2rayN/releases/tag/iran-lite-windows-preview.3) · [نسخهٔ اندروید](https://github.com/aghajani82/v2rayNG#readme)
 
 ZIP رو در یک پوشهٔ تازه باز کن و `v2rayN.exe` رو اجرا کن. بعد از وارد کردن لینک ساب، System Proxy رو روشن کن. در نصب تازه، قواعد Iran Lite به‌صورت پیش‌فرض فعالن.
 
