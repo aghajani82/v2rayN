@@ -2460,7 +2460,7 @@ public static class ConfigDbHandler
                 using var reader = new StreamReader(unpacked);
                 var item = new RoutingItem
                 {
-                    Remarks = "Aghajani Edition - Iran Lite",
+                    Remarks = Global.IranLiteRoutingName,
                     Url = string.Empty,
                     Sort = maxSort + 1,
                     DomainStrategy = "IPOnDemand",

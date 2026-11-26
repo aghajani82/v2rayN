@@ -6,7 +6,8 @@ system's proxy-aware applications to use that node. Use a new extracted folder
 without a previous `guiConfigs` directory to test factory defaults.
 
 The profile sends the Iranian domain list and Iranian IP ranges directly. The
-remaining traffic goes through the selected proxy. It includes `.ir`, `.ایران`,
+remaining traffic goes through the selected proxy. On Xray, ChatGPT and its
+connection dependencies use the proxy before Iran destination rules are checked. It includes `.ir`, `.ایران`,
 Iranian chat and payment domains, and the IranServer ranges. Generic malware,
 phishing, cryptomining, and adult-content categories are not used as direct rules.
 Existing routing profiles and regional presets remain available. The app does not

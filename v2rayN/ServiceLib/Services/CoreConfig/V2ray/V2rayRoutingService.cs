@@ -46,6 +46,30 @@ public partial class CoreConfigV2rayService
                     {
                         _coreConfig.routing.domainStrategy = routing.DomainStrategy;
                     }
+                    if (routing.Remarks == Global.IranLiteRoutingName)
+                    {
+                        GenRoutingUserRule(new RulesItem4Ray
+                        {
+                            outboundTag = Global.ProxyTag,
+                            domain =
+                            [
+                                "domain:chatgpt.com",
+                                "domain:openai.com",
+                                "domain:oaistatic.com",
+                                "domain:oaiusercontent.com",
+                                "domain:oaistatsig.com",
+                                "domain:openaimerge.com",
+                                "domain:chatgpt-team.site",
+                                "full:challenges.cloudflare.com",
+                                "full:cdn.workos.com",
+                                "full:forwarder.workos.com",
+                                "full:frontend-apps-multi-region.workos.com",
+                                "full:images.workoscdn.com",
+                                "full:setup.workos.com",
+                                "full:workos.imgix.net",
+                            ],
+                        });
+                    }
                     var rules = JsonUtils.Deserialize<List<RulesItem>>(routing.RuleSet);
                     foreach (var item in rules)
                     {

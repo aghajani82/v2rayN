@@ -26,6 +26,7 @@ public class Global
     public const string V2raySampleTunRules = NamespaceSample + "SampleTunRules";
     public const string SingboxSampleOutbound = NamespaceSample + "SingboxSampleOutbound";
     public const string CustomRoutingFileName = NamespaceSample + "custom_routing_";
+    public const string IranLiteRoutingName = "Aghajani Edition - Iran Lite";
     public const string TunSingboxDNSFileName = NamespaceSample + "tun_singbox_dns";
     public const string TunSingboxInboundFileName = NamespaceSample + "tun_singbox_inbound";
     public const string TunSingboxRulesFileName = NamespaceSample + "tun_singbox_rules";
