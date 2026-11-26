@@ -2448,6 +2448,31 @@ public static class ConfigDbHandler
         }
 
         var maxSort = items.Count;
+        RoutingItem? iranLite = null;
+        if (Utils.IsWindows() && !blImportAdvancedRules)
+        {
+            using var asset = typeof(ConfigDbHandler).Assembly.GetManifestResourceStream(
+                Global.CustomRoutingFileName + "iran_lite.gz");
+            if (asset != null)
+            {
+                using var unpacked = new System.IO.Compression.GZipStream(
+                    asset, System.IO.Compression.CompressionMode.Decompress);
+                using var reader = new StreamReader(unpacked);
+                var item = new RoutingItem
+                {
+                    Remarks = "Aghajani Edition - Iran Lite",
+                    Url = string.Empty,
+                    Sort = maxSort + 1,
+                    DomainStrategy = "IPOnDemand",
+                };
+                if (await AddBatchRoutingRules(item, await reader.ReadToEndAsync()) == 0)
+                {
+                    iranLite = item;
+                    maxSort++;
+                }
+            }
+        }
+
         //Bypass the mainland
         var item2 = new RoutingItem()
         {
@@ -2477,7 +2502,7 @@ public static class ConfigDbHandler
 
         if (!blImportAdvancedRules)
         {
-            await SetDefaultRouting(item2);
+            await SetDefaultRouting(iranLite ?? item2);
         }
         return 0;
     }

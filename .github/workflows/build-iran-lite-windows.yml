@@ -1,0 +1,59 @@
+name: Build Iran Lite for Windows
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [master]
+    paths:
+      - '.github/workflows/build-iran-lite-windows.yml'
+      - 'v2rayN/ServiceLib/**'
+      - 'v2rayN/v2rayN.Windows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  portable:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: recursive
+
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Build portable Windows x64
+        shell: pwsh
+        run: |
+          $bundle = Join-Path $env:RUNNER_TEMP 'core.zip'
+          $url = 'https://raw.githubusercontent.com/2dust/v2rayN-core-bin/d933c26f7e581bb668f32a9a083564d3ca0057ca/v2rayN-windows-64.zip'
+          Invoke-WebRequest $url -OutFile $bundle
+          $expected = '812553564098f28cabd4799142a353c6de630b6378d4a8a03f9eb2a301d01c5e'
+          if ((Get-FileHash $bundle -Algorithm SHA256).Hash -ne $expected) {
+            throw 'Core bundle checksum mismatch'
+          }
+          $staging = Join-Path $env:RUNNER_TEMP 'package'
+          Expand-Archive $bundle $staging
+          $app = Join-Path $staging 'v2rayN-windows-64'
+          dotnet publish v2rayN/AmazTool/AmazTool.csproj -c Release -r win-x64 --self-contained true -o $app
+          if ($LASTEXITCODE -ne 0) { throw 'AmazTool build failed' }
+          dotnet publish v2rayN/v2rayN.Windows/v2rayN.Windows.csproj -c Release -r win-x64 --self-contained true -o $app
+          if ($LASTEXITCODE -ne 0) { throw 'v2rayN build failed' }
+          foreach ($required in @('v2rayN.exe', 'AmazTool.exe', 'bin/xray/xray.exe')) {
+            if (!(Test-Path (Join-Path $app $required))) { throw "Package is missing $required" }
+          }
+          Copy-Item LICENSE, IRAN-LITE.md -Destination $app
+          $name = 'v2rayN-Aghajani-Iran-Lite-win-x64'
+          Rename-Item $app $name
+          Compress-Archive (Join-Path $staging $name) "$name.zip"
+          $hash = (Get-FileHash "$name.zip" -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $name.zip" | Set-Content "$name.zip.sha256" -Encoding ascii
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: v2rayN-Aghajani-Iran-Lite-win-x64
+          path: v2rayN-Aghajani-Iran-Lite-win-x64.zip*
+          if-no-files-found: error
