@@ -1,5 +1,13 @@
 # v2rayN
 
+## دانلود Aghajani Edition – Iran Lite
+
+**[دانلود ZIP ویندوز ۶۴ بیتی](https://github.com/aghajani82/v2rayN/releases/download/iran-lite-windows-preview.1/v2rayN-Aghajani-Iran-Lite-win-x64.zip)** · [صفحهٔ انتشار](https://github.com/aghajani82/v2rayN/releases/tag/iran-lite-windows-preview.1) · [نسخهٔ اندروید](https://github.com/aghajani82/v2rayNG#readme)
+
+ZIP رو در یک پوشهٔ تازه باز کن و `v2rayN.exe` رو اجرا کن. بعد از وارد کردن لینک ساب، System Proxy رو روشن کن. در نصب تازه، قواعد Iran Lite به‌صورت پیش‌فرض فعالن.
+
+---
+
 ### A GUI client for Windows, Linux and macOS. Support [Xray](https://github.com/XTLS/Xray-core) and [sing-box](https://github.com/SagerNet/sing-box) and [others](https://github.com/2dust/v2rayN/wiki/List-of-supported-cores)
 
 [![CodeFactor](https://www.codefactor.io/repository/github/2dust/v2rayn/badge)](https://www.codefactor.io/repository/github/2dust/v2rayn)
