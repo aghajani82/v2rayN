@@ -25,6 +25,7 @@ CATEGORIES = (
 DOMAINS = (
     "ir", "xn--mgba3a4f16a", "ipmyp.ir", "eitaa.com", "bale.ai", "gap.im", "gaplication.com",
     "zarinpal.com", "behpardakht.com", "mydigipay.com", "vandar.app", "vandar.io",
+    "bank-keshavarzi.com", "karafarinbank.com", "qmehr724.com",
 )
 OUTPUT = Path(__file__).resolve().parents[1] / "v2rayN/ServiceLib/Sample/custom_routing_iran_lite.gz"
 
