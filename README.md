@@ -4,6 +4,8 @@
 
 **[دانلود ZIP ویندوز ۶۴ بیتی](https://github.com/aghajani82/v2rayN/releases/download/iran-lite-windows-preview.3/v2rayN-Aghajani-Iran-Lite-win-x64.zip)** · [صفحهٔ انتشار](https://github.com/aghajani82/v2rayN/releases/tag/iran-lite-windows-preview.3) · [نسخهٔ اندروید](https://github.com/aghajani82/v2rayNG#readme)
 
+**Windows 7 SP1 · نسخهٔ سازگاری** · [دانلود ZIP ۳۲ بیتی](https://github.com/aghajani82/v2rayN/releases/download/iran-lite-win7-preview.1/v2rayN-Aghajani-Iran-Lite-win7-32.zip) · [دانلود ZIP ۶۴ بیتی](https://github.com/aghajani82/v2rayN/releases/download/iran-lite-win7-preview.1/v2rayN-Aghajani-Iran-Lite-win7-64.zip) · [پیش‌نیازها و راهنما](https://github.com/aghajani82/v2rayN/blob/iran-lite-win7-preview.1/IRAN-LITE-WIN7.md)
+
 [راهنمای به‌روزرسانی قوانین Iran Lite بدون نصب دوباره](https://github.com/aghajani82/clashmi/tree/main/iran-lite#بهروزرسانی-قوانین-در-v2rayn-و-v2rayng)
 
 ZIP رو در یک پوشهٔ تازه باز کن و `v2rayN.exe` رو اجرا کن. بعد از وارد کردن لینک ساب، System Proxy رو روشن کن. در نصب تازه، قواعد Iran Lite به‌صورت پیش‌فرض فعالن.
