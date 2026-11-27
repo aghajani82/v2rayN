@@ -7,3 +7,5 @@ Extract the ZIP into a fresh folder, run v2rayN.exe, import the normal subscript
 To refresh the rules, close v2rayN and replace the two DAT files beside xray.exe with the [current rules](https://github.com/aghajani82/clashmi/tree/main/iran-lite). Relaunch v2rayN from the same directory to keep settings and subscriptions.
 
 This is a compatibility preview for System Proxy. Native Windows 7 SP1 runtime testing is pending.
+
+The package contains the Xray executable and the two routing assets. Start with `v2rayN.exe`.
