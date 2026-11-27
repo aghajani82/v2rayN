@@ -39,7 +39,7 @@ jobs:
           }
           $rules = 'https://raw.githubusercontent.com/aghajani82/clashmi/18ede6ffa12a7a0a2a745c5422d3a9adce6da937/iran-lite'
           $app = Join-Path $env:RUNNER_TEMP app
-          Download-Verified "$rules/iran-lite-domains.dat" "$app/iran-lite-domains.dat" 'aee21821086fc04623f70ff9aa172fc32cad2949240b911172c49e8c55dd7f'
+          Download-Verified "$rules/iran-lite-domains.dat" "$app/iran-lite-domains.dat" 'aee21821086fc04623f70ff9aa172fc32cad2949240b911172c49e4e8c55dd7f'
           Download-Verified "$rules/iran-lite-ips.dat" "$app/iran-lite-ips.dat" 'e33afbf177dcfcb6127e4b4c969f0c447ddcfb85417f47cc0a001bd4cd4c1495'
           Copy-Item LICENSE "$app/v2rayN-LICENSE.txt"
           Copy-Item IRAN-LITE-WIN7.md -Destination $app
