@@ -4,6 +4,9 @@ on:
     branches: [master]
     paths: ['.github/workflows/iran-lite-win7.yml']
   workflow_dispatch:
+concurrency:
+  group: iran-lite-win7-preview
+  cancel-in-progress: false
 permissions:
   contents: read
 env:
