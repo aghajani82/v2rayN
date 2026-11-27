@@ -750,6 +750,18 @@ namespace v2rayN.Handler
                             }
                         }
                         break;
+                    case "xhttp":
+                    case "splithttp":
+                        streamSettings.network = "xhttp";
+                        streamSettings.xhttpSettings = new XhttpSettings
+                        {
+                            host = host,
+                            path = string.IsNullOrEmpty(node.path) ? "/" : node.path,
+                            mode = node.xhttpMode,
+                            extra = string.IsNullOrWhiteSpace(node.xhttpExtra)
+                                ? null : Newtonsoft.Json.Linq.JObject.Parse(node.xhttpExtra),
+                        };
+                        break;
                     case "grpc":
                         var grpcSettings = new GrpcSettings
                         {

@@ -228,6 +228,18 @@ namespace v2rayN.Handler
                     }
                     break;
 
+                case "xhttp":
+                case "splithttp":
+                    dicQuery["type"] = "xhttp";
+                    if (!Utils.IsNullOrEmpty(item.xhttpMode))
+                    {
+                        dicQuery["mode"] = Utils.UrlEncode(item.xhttpMode);
+                    }
+                    if (!Utils.IsNullOrEmpty(item.xhttpExtra))
+                    {
+                        dicQuery["extra"] = Utils.UrlEncode(item.xhttpExtra);
+                    }
+                    goto case "ws";
                 case "ws":
                     if (!Utils.IsNullOrEmpty(item.requestHost))
                     {
@@ -768,8 +780,17 @@ namespace v2rayN.Handler
             item.sni = query["sni"] ?? "";
             item.alpn = Utils.String2List(Utils.UrlDecode(query["alpn"] ?? ""));
             item.network = query["type"] ?? "tcp";
+            item.fingerprint = query["fp"] ?? "";
             switch (item.network)
             {
+                case "xhttp":
+                case "splithttp":
+                    item.network = "xhttp";
+                    item.xhttpMode = query["mode"];
+                    item.xhttpExtra = query["extra"];
+                    item.requestHost = query["host"] ?? "";
+                    item.path = query["path"] ?? "/";
+                    break;
                 case "tcp":
                     item.headerType = query["headerType"] ?? "none";
                     item.requestHost = Utils.UrlDecode(query["host"] ?? "");

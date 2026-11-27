@@ -1492,6 +1492,14 @@ namespace v2rayN.Handler
 
             if (blImportAdvancedRules || config.routings.Count(it => it.locked != true) <= 0)
             {
+                var iranLite = new RoutingItem { remarks = "Aghajani Edition - Iran Lite" };
+                AddBatchRoutingRules(ref iranLite, Utils.GetEmbedText(Global.CustomRoutingFileName + "iran_lite"));
+                config.routings.Add(iranLite);
+                if (!blImportAdvancedRules)
+                {
+                    config.domainStrategy = "IPOnDemand";
+                }
+
                 //Bypass the mainland
                 var item2 = new RoutingItem()
                 {

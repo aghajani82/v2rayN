@@ -401,7 +401,16 @@ namespace v2rayN.Mode
         /// grpc
         /// </summary>
         public GrpcSettings grpcSettings { get; set; }
+        public XhttpSettings xhttpSettings { get; set; }
 
+    }
+
+    public class XhttpSettings
+    {
+        public string host { get; set; }
+        public string path { get; set; }
+        public string mode { get; set; }
+        public Newtonsoft.Json.Linq.JObject extra { get; set; }
     }
 
     public class TlsSettings

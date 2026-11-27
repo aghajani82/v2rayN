@@ -575,6 +575,8 @@ namespace v2rayN.Mode
         }
 
         public string fingerprint { get; set; }
+        public string xhttpMode { get; set; }
+        public string xhttpExtra { get; set; }
     }
 
     [Serializable]
