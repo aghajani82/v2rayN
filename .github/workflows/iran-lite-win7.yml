@@ -30,9 +30,11 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           function Download-Verified($Url, $Path, $ExpectedHash) {
-            Invoke-WebRequest $Url -OutFile $Path
-            if ((Get-FileHash $Path -Algorithm SHA256).Hash -ne $ExpectedHash) {
-              throw "Hash mismatch for $Url"
+            curl.exe --fail --location --silent --show-error --retry 3 --output $Path $Url
+            if ($LASTEXITCODE -ne 0) { throw "Download failed for $Url" }
+            $actual = (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash
+            if ($actual -ne $ExpectedHash) {
+              throw "Hash mismatch for ${Url}: expected $ExpectedHash, got $actual"
             }
           }
           $rules = 'https://raw.githubusercontent.com/aghajani82/clashmi/18ede6ffa12a7a0a2a745c5422d3a9adce6da937/iran-lite'
