@@ -1,0 +1,86 @@
+name: Build Iran Lite for Windows 7
+on:
+  push:
+    branches: [master]
+    paths: ['.github/workflows/iran-lite-win7.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+env:
+  LEGACY_SOURCE_SHA: '4105b31c79eb40253c55d0cc6d4e5626ffdbf75e'
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ env.LEGACY_SOURCE_SHA }}
+      - name: Build v2rayN on .NET Framework 4.8
+        shell: pwsh
+        run: |
+          dotnet build v2rayN/v2rayN/v2rayN.csproj -c Release -o "${{ runner.temp }}/app"
+          if ($LASTEXITCODE -ne 0) { throw 'v2rayN build failed' }
+      - name: Package 32- and 64-bit Xray builds for Windows 7
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          function Download-Verified($Url, $Path, $ExpectedHash) {
+            Invoke-WebRequest $Url -OutFile $Path
+            if ((Get-FileHash $Path -Algorithm SHA256).Hash -ne $ExpectedHash) {
+              throw "Hash mismatch for $Url"
+            }
+          }
+          $rules = 'https://raw.githubusercontent.com/aghajani82/clashmi/18ede6ffa12a7a0a2a745c5422d3a9adce6da937/iran-lite'
+          $app = Join-Path $env:RUNNER_TEMP app
+          Download-Verified "$rules/iran-lite-domains.dat" "$app/iran-lite-domains.dat" 'aee21821086fc04623f70ff9aa172fc32cad2949240b911172c49e8c55dd7f'
+          Download-Verified "$rules/iran-lite-ips.dat" "$app/iran-lite-ips.dat" 'e33afbf177dcfcb6127e4b4c969f0c447ddcfb85417f47cc0a001bd4cd4c1495'
+          Copy-Item LICENSE "$app/v2rayN-LICENSE.txt"
+          Copy-Item IRAN-LITE-WIN7.md -Destination $app
+          $packages = @{
+            '32' = '3d73134f74e119589cc117c8f45b4564a14417f9b74508cc48599f142ac3aa81'
+            '64' = '75e67c738fdfafb9649f1a81a7ab6b3ba97a0f2e09a44254bff03c5b077547d3'
+          }
+          New-Item dist -ItemType Directory
+          foreach ($bits in $packages.Keys) {
+            $name = "v2rayN-Aghajani-Iran-Lite-win7-$bits"
+            $stage = Join-Path $env:RUNNER_TEMP $name
+            Copy-Item $app $stage -Recurse
+            $core = Join-Path $env:RUNNER_TEMP "xray-$bits.zip"
+            Download-Verified "https://github.com/XTLS/Xray-core/releases/download/v26.9.30/Xray-win7-$bits.zip" $core $packages[$bits]
+            Expand-Archive $core $stage -Force
+            $env:XRAY_LOCATION_ASSET = $stage
+            powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/test-iran-lite-win7.ps1 -Stage $stage
+            if ($LASTEXITCODE -ne 0) { throw "Smoke test failed for $bits-bit Xray" }
+            Compress-Archive $stage "dist/$name.zip"
+            $hash = (Get-FileHash "dist/$name.zip").Hash.ToLowerInvariant()
+            Set-Content "dist/$name.zip.sha256" "$hash  $name.zip" -Encoding ascii
+          }
+      - uses: actions/upload-artifact@v7
+        with:
+          name: iran-lite-win7
+          path: dist/*
+          if-no-files-found: error
+  publish:
+    needs: build
+    if: github.repository == 'aghajani82/v2rayN' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: iran-lite-win7
+          path: dist
+      - name: Publish legacy preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          SOURCE_SHA: ${{ env.LEGACY_SOURCE_SHA }}
+        run: |
+          if gh release view iran-lite-win7-preview.1 >/dev/null 2>&1; then exit 0; fi
+          cd dist
+          for checksum in *.sha256; do sha256sum --check "$checksum"; done
+          gh release create iran-lite-win7-preview.1 ./* --target "$SOURCE_SHA" \
+            --title 'Iran Lite for Windows 7 SP1 Preview 1' --prerelease --latest=false \
+            --notes 'Portable v2rayN 5.39 with Xray 26.9.30 for Windows 7 and the Iran Lite routing preset. Requires .NET Framework 4.8 and Windows 7 SP1 updates. Build and XHTTP configuration validated on a current Windows runner. Windows 7 runtime testing is pending.'
